@@ -1,0 +1,155 @@
+/* Reset CSS */ 
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Jost', sans-serif;
+}
+
+#main {
+
+}
+
+#header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    padding: 20px 18%;
+    z-index: 1001;
+}
+
+#header .logo {
+    text-decoration: none;
+    font-size: 20px;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: 4px;
+}
+
+.nav {
+    list-style: none;
+    display: flex;
+}
+
+.nav li {
+    position: relative;
+}
+
+.nav li a {
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 27px;
+}
+
+.nav a::after {
+    content: '';
+    position: absolute;
+    background-color: #f75023;
+    height: 2px;
+    width: 0;
+    left: 0;
+    bottom: -3px;
+    transition: width ease .5s;
+}
+
+.nav a:hover::after {
+    width: 100%;
+}
+
+.btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 17px;
+    min-width: 120px;
+    padding: 2px 4px;
+    border: 2px solid #f75023;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: ease .3s;
+    max-width: 150px;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #f75023;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+#content {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    background: url(../img/background.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 150px 18%;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    grid-gap: 4rem;
+}
+
+span {
+    color: #f75023;
+}
+
+.job {
+    color: #fff;
+    font-size: 20px;
+    background-color: #2574F5;
+    padding: 8px 18px;
+    border-radius: 50px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.content--img img {
+    width: 500px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.social {
+    padding-top: 32px;
+}
+
+.social a {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    font-size: 20px;
+    border: 2px solid;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    transition: ease .3s;
+    color: #000;
+}
+
+.social a:hover {
+    color: #fff;
+    transform: scale(1.1);
+    background: #f75023;
+}
+
+.social--contact + .social--contact{
+    margin-left: 30px;
+}
+
+.content--btn {
+    margin-top: 32px;
+}
+
+.content--btn + .content--btn {
+    margin-left: 15px;
+}
+
+
