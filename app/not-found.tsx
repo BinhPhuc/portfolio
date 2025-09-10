@@ -1,14 +1,16 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Home, ArrowLeft } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Home, ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <Card className="w-full max-w-md text-center">
         <CardHeader>
-          <CardTitle className="text-6xl font-bold text-muted-foreground mb-4">404</CardTitle>
+          <CardTitle className="text-6xl font-bold text-muted-foreground mb-4">
+            404
+          </CardTitle>
           <CardTitle className="text-2xl">Trang không tìm thấy</CardTitle>
         </CardHeader>
         <CardContent>
@@ -32,5 +34,5 @@ export default function NotFound() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
