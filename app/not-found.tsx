@@ -21,13 +21,13 @@ export default function NotFound() {
             <Button asChild>
               <Link href="/">
                 <Home className="mr-2 h-4 w-4" />
-                Go to homepage
+                Go To Homepage
               </Link>
             </Button>
             <Button variant="outline" asChild>
               <Link href="/blog">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Go to blog
+                Go To Blog
               </Link>
             </Button>
           </div>
