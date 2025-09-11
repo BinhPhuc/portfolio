@@ -11,7 +11,6 @@ A modern, responsive personal portfolio website built with Next.js, featuring a 
 - **📝 Blog System**: Full-featured blog with Markdown support and syntax highlighting
 - **🔐 Authentication**: Secure login/register system powered by Supabase Auth
 - **⚡ Admin Dashboard**: Protected admin panel for managing blog posts (CRUD operations)
-- **🌙 Dark Mode**: System-aware theme switching with manual toggle
 - **📱 Responsive Design**: Mobile-first design that works on all devices
 - **🎨 Modern UI**: Built with shadcn/ui components and Tailwind CSS
 - **🔒 Security**: Row Level Security (RLS) policies for data protection
@@ -29,25 +28,25 @@ A modern, responsive personal portfolio website built with Next.js, featuring a 
 
 ## 📁 Project Structure
 
-\`\`\`
+```bash
 ├── app/                    # Next.js App Router
 │   ├── (auth)/            # Authentication pages
 │   │   ├── login/
 │   │   ├── sign-up/
 │   │   └── error/
-│   ├── admin/             # Protected admin dashboard
-│   │   └── posts/         # Blog post management
-│   ├── blog/              # Public blog pages
-│   │   └── [slug]/        # Dynamic blog post pages
-│   ├── about/             # About page with timeline
-│   └── globals.css        # Global styles
-├── components/            # Reusable components
-│   ├── ui/               # shadcn/ui components
-│   ├── admin/            # Admin-specific components
-│   ├── navigation.tsx    # Main navigation with theme toggle
-│   └── theme-provider.tsx # Theme context provider
-├── lib/                  # Utility functions
-│   └── supabase/         # Supabase client configuration
-├── scripts/              # Database migration scripts
-└── hooks/                # Custom React hooks
-\`\`\`
+│   ├── admin/            
+│   │   └── posts/       
+│   ├── blog/           
+│   │   └── [slug]/      
+│   ├── about/           
+│   └── globals.css       
+├── components/        
+│   ├── ui/             
+│   ├── admin/       
+│   ├── navigation.tsx    
+│   └── theme-provider.tsx
+├── lib/                
+│   └── supabase/        
+├── scripts/             
+└── hooks/               
+```
