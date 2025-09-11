@@ -2,7 +2,15 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowDown, Github, Linkedin, Mail, ExternalLink } from "lucide-react";
+import {
+  ArrowDown,
+  Github,
+  Linkedin,
+  Mail,
+  ExternalLink,
+  Facebook,
+  Instagram,
+} from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -54,6 +62,21 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center justify-center gap-4 mb-12">
+            <Button variant="outline" size="icon" asChild>
+              <Link
+                href="https://www.facebook.com/binh.phuc.737448"
+                target="_blank"
+              >
+                <Facebook className="h-4 w-4" />
+                <span className="sr-only">Facebook</span>
+              </Link>
+            </Button>
+            <Button variant="outline" size="icon" asChild>
+              <Link href="https://www.instagram.com/binhpphuc/" target="_blank">
+                <Instagram className="h-4 w-4" />
+                <span className="sr-only">Instagram</span>
+              </Link>
+            </Button>
             <Button variant="outline" size="icon" asChild>
               <Link href="https://github.com/BinhPhuc" target="_blank">
                 <Github className="h-4 w-4" />
