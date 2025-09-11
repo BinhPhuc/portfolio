@@ -49,7 +49,7 @@ export default function HomePage() {
         <div className="container mx-auto max-w-4xl text-center">
           <div className="mb-8">
             <Badge variant="secondary" className="mb-4">
-              Available for work
+              Available For Work
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-balance mb-6">
               Hi, I'm <span className="text-primary">Pham Phuc Binh</span>
