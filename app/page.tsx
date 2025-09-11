@@ -15,10 +15,12 @@ import { AnimatedSection } from "@/components/animated-section";
 import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import ContactInfo from "@/components/contact-info";
+import Footer from "@/components/footer";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
+      <Navbar />
       <AnimatedSection className="pt-24 pb-16 px-6">
         <div className="container mx-auto max-w-4xl text-center">
           <div className="mb-8 relative w-[150px] h-[150px] mx-auto">
@@ -111,6 +113,7 @@ export default function HomePage() {
           </div>
         </div>
       </AnimatedSection>
+      <Footer />
     </div>
   );
 }

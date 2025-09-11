@@ -18,6 +18,8 @@ import {
 import { HeroSection } from "@/app/about/hero-section";
 import { AnimatedSection } from "@/components/animated-section";
 import ContactInfo from "@/components/contact-info";
+import { Navbar } from "@/components/navbar";
+import Footer from "@/components/footer";
 
 const timelineData = [
   {
@@ -129,6 +131,7 @@ const skills = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
+      <Navbar />
       <div className="pt-24 pb-16 px-6">
         <div className="container mx-auto max-w-4xl">
           <Button variant="ghost" asChild className="mb-8">
@@ -346,6 +349,7 @@ export default function AboutPage() {
           </AnimatedSection>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

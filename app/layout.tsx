@@ -10,7 +10,7 @@ import { Navbar } from "@/components/navbar";
 import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Porfolio - Pham Phuc Binh",
+  title: "Portfolio - Pham Phuc Binh",
   description:
     "Personal portfolio of Pham Phuc Binh, a passionate developer specializing in Next.js, React, and Java Spring Boot",
 };
@@ -23,17 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <Suspense fallback={null}>{children}</Suspense>
-          <Footer />
-          <Analytics />
-        </ThemeProvider>
+        <Suspense fallback={null}>{children}</Suspense>
+        <Analytics />
       </body>
     </html>
   );
