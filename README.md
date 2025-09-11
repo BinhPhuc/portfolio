@@ -29,8 +29,8 @@ A modern, responsive personal portfolio website built with Next.js, featuring a 
 ## 📁 Project Structure
 
 ```bash
-├── app/                    # Next.js App Router
-│   ├── (auth)/            # Authentication pages
+├── app/                   
+│   ├── (auth)/           
 │   │   ├── login/
 │   │   ├── sign-up/
 │   │   └── error/
