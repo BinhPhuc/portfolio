@@ -6,9 +6,13 @@ import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Navbar } from "@/components/navbar";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Portfolio - BinhPhuc",
+  title: "Porfolio - Pham Phuc Binh",
+  description:
+    "Personal portfolio of Pham Phuc Binh, a passionate developer specializing in Next.js, React, and Java Spring Boot",
 };
 
 export default function RootLayout({
@@ -25,7 +29,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Navbar />
           <Suspense fallback={null}>{children}</Suspense>
+          <Footer />
           <Analytics />
         </ThemeProvider>
       </body>
