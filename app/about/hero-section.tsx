@@ -11,13 +11,12 @@ export function HeroSection() {
       transition={{ duration: 0.5 }}
       className="text-center mb-16"
     >
-      <div className="mb-8">
+      <div className="mb-8 relative w-[150px] h-[150px] mx-auto">
         <Image
-          src="/portfolio.jpg" 
+          src="/portfolio.jpg"
           alt="Profile Picture"
-          width={150}
-          height={150}
-          className="rounded-full mx-auto border-4 border-primary"
+          fill
+          className="rounded-full object-cover border-4 border-primary"
           priority
         />
       </div>
