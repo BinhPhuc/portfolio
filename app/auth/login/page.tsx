@@ -33,7 +33,7 @@ export default function LoginPage() {
       if (error) throw error
       router.push("/admin")
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "Đã xảy ra lỗi")
+      setError(error instanceof Error ? error.message : "Something went wrong")
     } finally {
       setIsLoading(false)
     }

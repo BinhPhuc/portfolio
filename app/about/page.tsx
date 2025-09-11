@@ -2,26 +2,38 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, MapPin, Award, Code, Briefcase } from "lucide-react";
+import {
+  ArrowLeft,
+  MapPin,
+  Award,
+  Code,
+  Briefcase,
+  Github,
+  Linkedin,
+  Mail,
+  Instagram,
+  Facebook,
+  ExternalLink,
+} from "lucide-react";
+import { HeroSection } from "@/app/about/hero-section";
+import { AnimatedSection } from "@/app/about/animated-section";
 
 const timelineData = [
   {
     startYear: "Feb 2025",
     endYear: "Present",
-    title: "ISE Lab",
+    title: "Intelligent Software Engineering",
     company: "UET - VNU",
     location: "Hanoi, Vietnam",
     type: "work",
     description: "Competitive Programming, Algorithms and Datastructures, C++",
-    achievements: [
-      "Questin - Admission and Career Guidance Chatbot "
-    ],
+    achievements: ["Questin - Admission and Career Guidance Chatbot "],
     technologies: [],
   },
   {
     startYear: "Aug 2021",
     endYear: "May 2024",
-    title: "HUS High School for Gifted Students",
+    title: "High School for Gifted Students",
     company: "HUS - VNU",
     location: "Hanoi, Vietnam",
     type: "work",
@@ -29,10 +41,64 @@ const timelineData = [
     achievements: [
       "GPA: 9.5/10 (Grade 12)",
       "Informatics Team Member",
-      "Third Prize, VNU Excellent Student Contest in Informatics",
+      "Third Prize, VNU Excellent Student Contest",
       "Bronze Medal, HSGSO (Informatics)",
     ],
     technologies: [],
+  },
+];
+
+const personalProjects = [
+  {
+    title: "Questin - AI Career Guidance Chatbot",
+    description:
+      "A chatbot developed for the VNU University of Engineering and Technology to support admission counseling and post-graduation guidance. The system leverages Agentic RAG for improved response accuracy. Contributed to UI/UX design, backend development with FastAPI, and the design of conversation flows to deliver reliable and precise answers to users.",
+    technologies: [
+      "TypeScript",
+      "React (UI/UX)",
+      "Machine Learning",
+      "FastAPI",
+      "Redis",
+      "ELK Stack",
+      "MinIO",
+      "Agentic RAG",
+      "LangChain",
+      "MySQL",
+    ],
+    status: "In Development",
+    category: "AI/ML",
+    highlights: [
+      "Designed and developed a chatbot to support university admission counseling and post-graduation guidance.",
+      "Integration with university admission data",
+      "Implemented Agentic RAG approach to improve accuracy and relevance of responses.",
+      "Contributed to UI/UX design to enhance user experience and accessibility.",
+      "Built and maintained backend services with FastAPI for scalable and efficient performance.",
+      "Collaborated on conversation flow design to deliver precise and reliable answers to users.",
+    ],
+    githubUrl: "https://github.com/BinhPhuc",
+    liveUrl: "https://questin.iselab.info/",
+  },
+  {
+    title: "Portfolio Website",
+    description:
+      "A modern, responsive portfolio website built with Next.js and TypeScript, featuring dark mode, smooth animations, and optimized performance.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Vercel",
+    ],
+    status: "Completed",
+    category: "Web Development",
+    highlights: [
+      "Server-side rendering for optimal SEO",
+      "Responsive design with mobile-first approach",
+      "Dark/light theme toggle",
+      "Smooth page transitions and animations",
+    ],
+    githubUrl: "https://github.com/BinhPhuc/portfolio",
+    liveUrl: "#",
   },
 ];
 
@@ -94,21 +160,13 @@ export default function AboutPage() {
           <Button variant="ghost" asChild className="mb-8">
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
+              Back To Home
             </Link>
           </Button>
 
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance">
-              About Me
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-              The journey of a passionate developer who loves technology and
-              never stops learning
-            </p>
-          </div>
+          <HeroSection />
 
-          <section className="mb-16">
+          <AnimatedSection className="mt-16">
             <h2 className="text-2xl font-bold mb-8 text-center">
               Skills & Technologies
             </h2>
@@ -117,7 +175,7 @@ export default function AboutPage() {
                 <Card key={skillGroup.category}>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Code className="h-5 w-5" />
+                      <Code className="h-4 w-4" />
                       {skillGroup.category}
                     </CardTitle>
                   </CardHeader>
@@ -133,23 +191,91 @@ export default function AboutPage() {
                 </Card>
               ))}
             </div>
-          </section>
+          </AnimatedSection>
 
-          <section>
+          <AnimatedSection className="mt-16">
+            <h2 className="text-2xl font-bold mb-8 text-center">
+              Personal Projects
+            </h2>
+            <div className="grid gap-6">
+              {personalProjects.map((project, index) => (
+                <Card key={index}>
+                  <CardHeader>
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                      <div>
+                        <CardTitle className="mb-2">{project.title}</CardTitle>
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          <Badge variant="outline">{project.category}</Badge>
+                          <Badge variant="outline">{project.status}</Badge>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        {project.githubUrl !== "#" && (
+                          <Button variant="outline" size="sm" asChild>
+                            <Link href={project.githubUrl} target="_blank">
+                              <Github className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                        )}
+                        {project.liveUrl !== "#" && (
+                          <Button variant="outline" size="sm" asChild>
+                            <Link href={project.liveUrl} target="_blank">
+                              <ExternalLink className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">
+                      {project.description}
+                    </p>
+
+                    <div className="mb-4">
+                      <h4 className="font-medium mb-2">Key Highlights</h4>
+                      <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+                        {project.highlights.map((highlight, i) => (
+                          <li key={i}>{highlight}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="font-medium mb-2">Technologies Used</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.map((tech) => (
+                          <Badge key={tech} variant="secondary">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection className="mt-16">
             <h2 className="text-2xl font-bold mb-12 text-center">
               Education & Experience
             </h2>
-            <div className="relative">
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border hidden md:block"></div>
+            <div className="relative pl-8 md:pl-relative max-w-3xl mx-auto">
+              <div className="absolute left-4 md:left-1/2 top-0 h-full w-0.5 bg-border transform -translate-x-1/2"></div>
 
-              <div className="space-y-8">
+              <div className="space-y-12">
                 {timelineData.map((item, index) => (
                   <div key={index} className="relative">
-                    <div className="absolute left-6 w-4 h-4 bg-primary rounded-full border-4 border-background hidden md:block"></div>
-                    <div className="md:ml-16">
+                    <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background z-10"></div>
+                    <div
+                      className={`ml-12 md:ml-0 md:w-[calc(50%-32px)] ${
+                        index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
+                      }`}
+                    >
                       <Card>
                         <CardHeader>
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                          <div className="flex flex-col gap-2">
                             <CardTitle className="flex items-center gap-2">
                               {item.type === "work" ? (
                                 <Briefcase className="h-5 w-5" />
@@ -158,16 +284,19 @@ export default function AboutPage() {
                               )}
                               {item.title}
                             </CardTitle>
-                            <Badge variant="outline">
+                            <div className="flex flex-col sm:flex-row items-start gap-2 text-sm text-muted-foreground">
+                              <span className="font-medium">
+                                {item.company}
+                              </span>
+                              <span className="hidden sm:inline">•</span>
+                              <span className="flex items-center gap-1">
+                                <MapPin className="h-3 w-3" />
+                                {item.location}
+                              </span>
+                            </div>
+                            <Badge variant="outline" className="w-fit">
                               {item.startYear} - {item.endYear}
                             </Badge>
-                          </div>
-                          <div className="flex flex-col sm:flex-row gap-2 text-sm text-muted-foreground">
-                            <span className="font-medium">{item.company}</span>
-                            <span className="flex items-center gap-1">
-                              <MapPin className="h-3 w-3" />
-                              {item.location}
-                            </span>
                           </div>
                         </CardHeader>
                         <CardContent>
@@ -209,15 +338,57 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </AnimatedSection>
 
-          <section className="mt-16 text-center">
+          <AnimatedSection className="mt-16 text-center">
             <Card className="p-8">
-              <h3 className="text-2xl font-bold mb-4">Connect With Me</h3>
-              <p className="text-muted-foreground mb-6">
+              <h3 className="text-2xl font-bold">Connect With Me</h3>
+
+              <p className="text-muted-foreground">
                 I'm always open to discussing interesting projects and new
                 collaboration opportunities.
               </p>
+              <div className="flex justify-center gap-4">
+                <Button variant="outline" size="icon" asChild>
+                  <Link
+                    href="https://www.facebook.com/binh.phuc.737448"
+                    target="_blank"
+                  >
+                    <Facebook className="h-4 w-4" />
+                    <span className="sr-only">Facebook</span>
+                  </Link>
+                </Button>
+                <Button variant="outline" size="icon" asChild>
+                  <Link
+                    href="https://www.instagram.com/binhpphuc/"
+                    target="_blank"
+                  >
+                    <Instagram className="h-4 w-4" />
+                    <span className="sr-only">Instagram</span>
+                  </Link>
+                </Button>
+                <Button variant="outline" size="icon" asChild>
+                  <Link href="https://github.com/BinhPhuc" target="_blank">
+                    <Github className="h-4 w-4" />
+                    <span className="sr-only">GitHub</span>
+                  </Link>
+                </Button>
+                <Button variant="outline" size="icon" asChild>
+                  <Link
+                    href="https://www.linkedin.com/in/b%C3%ACnh-ph%E1%BA%A1m-361708326/"
+                    target="_blank"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                    <span className="sr-only">LinkedIn</span>
+                  </Link>
+                </Button>
+                <Button variant="outline" size="icon" asChild>
+                  <Link href="mailto:pham.phuc.binh.271106@gmail.com">
+                    <Mail className="h-4 w-4" />
+                    <span className="sr-only">Email</span>
+                  </Link>
+                </Button>
+              </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild>
                   <Link href="/blog">Read My Blog</Link>
@@ -227,7 +398,7 @@ export default function AboutPage() {
                 </Button>
               </div>
             </Card>
-          </section>
+          </AnimatedSection>
         </div>
       </div>
     </div>
