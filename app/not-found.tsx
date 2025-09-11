@@ -11,23 +11,23 @@ export default function NotFound() {
           <CardTitle className="text-6xl font-bold text-muted-foreground mb-4">
             404
           </CardTitle>
-          <CardTitle className="text-2xl">Trang không tìm thấy</CardTitle>
+          <CardTitle className="text-2xl">Page Not Found</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-6">
-            Xin lỗi, trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển.
+            Sorry, the page you are looking for does not exist.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button asChild>
               <Link href="/">
                 <Home className="mr-2 h-4 w-4" />
-                Về trang chủ
+                Go to homepage
               </Link>
             </Button>
             <Button variant="outline" asChild>
               <Link href="/blog">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Về blog
+                Go to blog
               </Link>
             </Button>
           </div>
