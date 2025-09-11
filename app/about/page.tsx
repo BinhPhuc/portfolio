@@ -16,7 +16,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { HeroSection } from "@/app/about/hero-section";
-import { AnimatedSection } from "@/app/about/animated-section";
+import { AnimatedSection } from "@/components/animated-section";
+import ContactInfo from "@/components/contact-info";
 
 const timelineData = [
   {
@@ -128,33 +129,6 @@ const skills = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
-      <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-xl font-bold text-foreground">
-              Portfolio
-            </Link>
-            <div className="hidden md:flex items-center gap-6">
-              <Link
-                href="/"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Home
-              </Link>
-              <Link href="/about" className="text-foreground font-medium">
-                About
-              </Link>
-              <Link
-                href="/blog"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Blog
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <div className="pt-24 pb-16 px-6">
         <div className="container mx-auto max-w-4xl">
           <Button variant="ghost" asChild className="mb-8">
@@ -348,53 +322,24 @@ export default function AboutPage() {
                 I'm always open to discussing interesting projects and new
                 collaboration opportunities.
               </p>
-              <div className="flex justify-center gap-4">
-                <Button variant="outline" size="icon" asChild>
-                  <Link
-                    href="https://www.facebook.com/binh.phuc.737448"
-                    target="_blank"
-                  >
-                    <Facebook className="h-4 w-4" />
-                    <span className="sr-only">Facebook</span>
-                  </Link>
-                </Button>
-                <Button variant="outline" size="icon" asChild>
-                  <Link
-                    href="https://www.instagram.com/binhpphuc/"
-                    target="_blank"
-                  >
-                    <Instagram className="h-4 w-4" />
-                    <span className="sr-only">Instagram</span>
-                  </Link>
-                </Button>
-                <Button variant="outline" size="icon" asChild>
-                  <Link href="https://github.com/BinhPhuc" target="_blank">
-                    <Github className="h-4 w-4" />
-                    <span className="sr-only">GitHub</span>
-                  </Link>
-                </Button>
-                <Button variant="outline" size="icon" asChild>
-                  <Link
-                    href="https://www.linkedin.com/in/b%C3%ACnh-ph%E1%BA%A1m-361708326/"
-                    target="_blank"
-                  >
-                    <Linkedin className="h-4 w-4" />
-                    <span className="sr-only">LinkedIn</span>
-                  </Link>
-                </Button>
-                <Button variant="outline" size="icon" asChild>
-                  <Link href="mailto:pham.phuc.binh.271106@gmail.com">
-                    <Mail className="h-4 w-4" />
-                    <span className="sr-only">Email</span>
-                  </Link>
-                </Button>
-              </div>
+              <ContactInfo className="flex justify-center gap-4" />
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild>
-                  <Link href="/blog">Read My Blog</Link>
+                <Button asChild size="lg" className="group">
+                  <Link href="/blog">
+                    My Blog
+                    <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </Button>
-                <Button variant="outline" asChild>
-                  <Link href="mailto:hello@example.com">Contact Me</Link>
+                <Button
+                  variant="outline"
+                  asChild
+                  size="lg"
+                  className="group bg-transparent"
+                >
+                  <Link href="mailto:pham.phuc.binh.271106@gmail.com">
+                    Contact Me
+                    <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </Button>
               </div>
             </Card>
