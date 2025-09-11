@@ -17,6 +17,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import { Navbar } from "@/components/navbar";
+import Footer from "@/components/footer";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -46,23 +48,24 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-3.75rem)] bg-background flex items-center justify-center p-6">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-background flex items-center justify-center p-6">
+      <Navbar />
+      <div className="w-full max-w-lg">
         <div className="flex flex-col gap-6">
           <Button variant="ghost" asChild className="self-start">
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Về trang chủ
+              Go To Home Page
             </Link>
           </Button>
 
           <Card className="shadow-lg">
             <CardHeader className="space-y-2">
               <CardTitle className="text-3xl font-bold text-center">
-                Đăng nhập
+                Sign In
               </CardTitle>
               <CardDescription>
-                Nhập email và mật khẩu để truy cập trang quản trị
+                Enter your email and password to access the admin page
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -80,7 +83,7 @@ export default function LoginPage() {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="password">Mật khẩu</Label>
+                    <Label htmlFor="password">Password</Label>
                     <Input
                       id="password"
                       type="password"
@@ -95,17 +98,8 @@ export default function LoginPage() {
                     className="w-full text-base py-4"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
+                    {isLoading ? "Signing in..." : "Sign In"}
                   </Button>
-                </div>
-                <div className="mt-6 text-center text-base">
-                  Chưa có tài khoản?{" "}
-                  <Link
-                    href="/auth/sign-up"
-                    className="font-medium underline underline-offset-4 hover:text-primary"
-                  >
-                    Đăng ký
-                  </Link>
                 </div>
               </form>
             </CardContent>
