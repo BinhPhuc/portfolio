@@ -5,9 +5,7 @@ import { GeistMono } from "geist/font/mono";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Navbar } from "@/components/navbar";
-import Footer from "@/components/footer";
+import Loading from "@/app/loading";
 
 export const metadata: Metadata = {
   title: "Portfolio - Pham Phuc Binh",
@@ -23,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <Suspense fallback={null}>{children}</Suspense>
+        {children}
         <Analytics />
       </body>
     </html>

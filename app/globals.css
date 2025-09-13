@@ -123,6 +123,12 @@
   }
 }
 
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--color-background);
@@ -130,12 +136,10 @@ body {
   line-height: 1.6;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -153,7 +157,6 @@ html {
   background: var(--color-primary);
 }
 
-/* Blog content styling */
 .prose {
   color: var(--color-foreground);
   max-width: none;
@@ -232,7 +235,6 @@ html {
   text-decoration: none;
 }
 
-/* Line clamp utility */
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
