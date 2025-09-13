@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import "./globals.css";
 import Loading from "@/app/loading";
+import AppProvider from "@/components/app-provider";
 
 export const metadata: Metadata = {
   title: "Portfolio - Pham Phuc Binh",
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        {children}
+        <AppProvider>{children}</AppProvider>
         <Analytics />
       </body>
     </html>
