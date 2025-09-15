@@ -1,9 +1,8 @@
 import { CreateTimelineBody } from "@/schemas/timeline";
 import { useMutation } from "@tanstack/react-query";
-import { createClient } from "@/lib/supabase/client";
+import { timelineService } from "@/services/timeline-services";
 
 export const useSetTimeLine = () => {
-  const supabase = createClient();
   const {
     data,
     isPending: loading,
@@ -11,7 +10,7 @@ export const useSetTimeLine = () => {
   } = useMutation({
     mutationKey: ["setTimeLine"],
     mutationFn: async (body: CreateTimelineBody) => {
-      const response = await supabase.from("time_line").insert([body]);
+      const response = await timelineService.create(body);
       return response;
     },
   });
