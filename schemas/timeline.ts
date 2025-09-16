@@ -13,3 +13,9 @@ export const createTimelineSchema = z.object({
 });
 
 export type CreateTimelineBody = z.infer<typeof createTimelineSchema>;
+
+export type GetTimeLines = (CreateTimelineBody & {
+  id: string;
+  created_at: string;
+  updated_at: string;
+})[];

@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Save, Plus, X } from "lucide-react";
 import type { CreateTimelineBody } from "@/schemas/timeline";
+import { useSetTimeLine } from "@/hooks/timeline-hook";
 
 interface TimelineFormProps {
   initialData?: CreateTimelineBody;
@@ -26,6 +27,7 @@ export function TimelineForm({ initialData }: TimelineFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { error: setTimeLineError, loading, setTimeLine } = useSetTimeLine();
 
   const [formData, setFormData] = useState<CreateTimelineBody>({
     start_year: initialData?.start_year || "",
@@ -43,20 +45,26 @@ export function TimelineForm({ initialData }: TimelineFormProps) {
   const [newTechnology, setNewTechnology] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
+    if (loading) return;
     e.preventDefault();
     setIsLoading(true);
     setError(null);
-
-    const supabase = createClient();
 
     try {
       const timelineData = {
         ...formData,
       };
 
-      const result = await supabase.from("timelines").insert([timelineData]);
+      await setTimeLine(timelineData);
 
-      if (result.error) throw result.error;
+      if (setTimeLineError) {
+        setError(
+          setTimeLineError instanceof Error
+            ? setTimeLineError.message
+            : "An error occurred"
+        );
+        return;
+      }
 
       router.push("/admin/timeline");
       router.refresh();
