@@ -41,6 +41,7 @@
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "@sveltejs/kit": "latest",
+    "@t3-oss/env-nextjs": "^0.13.8",
     "@tanstack/react-query": "^5.87.4",
     "@tanstack/react-query-devtools": "^5.87.4",
     "@vercel/analytics": "latest",
