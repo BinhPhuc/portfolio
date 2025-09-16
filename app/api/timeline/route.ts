@@ -46,3 +46,29 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    const supabase = await createClient();
+
+    const { data: timeLine, error } = await supabase
+      .from("time_line")
+      .select("*")
+      .order("start_year", { ascending: false });
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+
+    return NextResponse.json({
+      status: 200,
+      message: "Get all timeline entries successfully",
+      data: timeLine,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
