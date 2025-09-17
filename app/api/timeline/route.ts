@@ -61,8 +61,6 @@ export async function GET() {
     }
 
     return NextResponse.json({
-      status: 200,
-      message: "Get all timeline entries successfully",
       data: timeLine,
     });
   } catch (error) {

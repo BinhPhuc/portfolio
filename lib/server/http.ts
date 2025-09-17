@@ -1,3 +1,5 @@
+import { serverEnv } from "@/data/env/server";
+
 interface ServerHttpClientConfig {
   baseURL: string;
   timeout?: number;
@@ -31,8 +33,12 @@ class ServerHttpClient {
   private async request<T>(
     endpoint: string,
     options: RequestInit & RequestConfig = {}
-  ): Promise<T> {
-    const url = `${this.baseURL}${endpoint}`;
+  ) {
+    const normalizedEndpoint = endpoint.startsWith("/")
+      ? endpoint
+      : `/${endpoint}`;
+    const url = `${this.baseURL}${normalizedEndpoint}`;
+    console.log("Request URL:", url);
     const { timeout = this.timeout, ...fetchOptions } = options;
 
     const headers = {
@@ -57,12 +63,13 @@ class ServerHttpClient {
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        return await response.json();
-      }
-
-      return (await response.text()) as T;
+      const status = response.status;
+      const payload: T = await response.json();
+      const data = {
+        status,
+        payload,
+      };
+      return data;
     } catch (error) {
       clearTimeout(timeoutId);
 
@@ -77,18 +84,14 @@ class ServerHttpClient {
     }
   }
 
-  async get<T>(endpoint: string, config?: RequestConfig): Promise<T> {
+  async get<T>(endpoint: string, config?: RequestConfig) {
     return this.request<T>(endpoint, {
       method: "GET",
       ...config,
     });
   }
 
-  async post<T>(
-    endpoint: string,
-    data?: any,
-    config?: RequestConfig
-  ): Promise<T> {
+  async post<T>(endpoint: string, data?: any, config?: RequestConfig) {
     return this.request<T>(endpoint, {
       method: "POST",
       body: data ? JSON.stringify(data) : undefined,
@@ -96,11 +99,7 @@ class ServerHttpClient {
     });
   }
 
-  async put<T>(
-    endpoint: string,
-    data?: any,
-    config?: RequestConfig
-  ): Promise<T> {
+  async put<T>(endpoint: string, data?: any, config?: RequestConfig) {
     return this.request<T>(endpoint, {
       method: "PUT",
       body: data ? JSON.stringify(data) : undefined,
@@ -108,11 +107,7 @@ class ServerHttpClient {
     });
   }
 
-  async patch<T>(
-    endpoint: string,
-    data?: any,
-    config?: RequestConfig
-  ): Promise<T> {
+  async patch<T>(endpoint: string, data?: any, config?: RequestConfig) {
     return this.request<T>(endpoint, {
       method: "PATCH",
       body: data ? JSON.stringify(data) : undefined,
@@ -120,7 +115,7 @@ class ServerHttpClient {
     });
   }
 
-  async delete<T>(endpoint: string, config?: RequestConfig): Promise<T> {
+  async delete<T>(endpoint: string, config?: RequestConfig) {
     return this.request<T>(endpoint, {
       method: "DELETE",
       ...config,
@@ -137,7 +132,7 @@ class ServerHttpClient {
 }
 
 const serverHttpClient = new ServerHttpClient({
-  baseURL: process.env.BACKEND_API_URL || "http://localhost:8000/api",
+  baseURL: serverEnv.BACKEND_API_URL || "http://localhost:8000/api",
   timeout: 15000,
 });
 

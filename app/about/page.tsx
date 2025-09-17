@@ -20,6 +20,8 @@ import { AnimatedSection } from "@/components/animated-section";
 import ContactInfo from "@/components/contact-info";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/footer";
+import { serverHttpClient } from "@/lib/server/http";
+import { GetTimeLines } from "@/schemas/timeline";
 
 const timelineData = [
   {
@@ -128,7 +130,10 @@ const skills = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const {
+    payload: { data: timeLineData },
+  } = await serverHttpClient.get<GetTimeLines>("/timeline");
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -242,7 +247,7 @@ export default function AboutPage() {
               <div className="absolute left-4 md:left-1/2 top-0 h-full w-0.5 bg-border transform -translate-x-1/2"></div>
 
               <div className="space-y-12">
-                {timelineData.map((item, index) => (
+                {timeLineData.map((item, index) => (
                   <div key={index} className="relative">
                     <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background z-10"></div>
                     <div
@@ -272,7 +277,7 @@ export default function AboutPage() {
                               </span>
                             </div>
                             <Badge variant="outline" className="w-fit">
-                              {item.startYear} - {item.endYear}
+                              {item.start_year} - {item.end_year}
                             </Badge>
                           </div>
                         </CardHeader>
