@@ -9,18 +9,18 @@ A modern, responsive personal portfolio website built with Next.js, featuring a 
 - **🏠 Homepage**: Clean, modern landing page with hero section and skills showcase
 - **👤 About Page**: Interactive timeline showcasing career milestones and achievements
 - **📝 Blog System**: Full-featured blog with Markdown support and syntax highlighting
-- **🔐 Authentication**: Secure login/register system powered by Supabase Auth
+- **🔐 Authentication**: Secure login/register system powered by Better Auth
 - **⚡ Admin Dashboard**: Protected admin panel for managing blog posts (CRUD operations)
 - **📱 Responsive Design**: Mobile-first design that works on all devices
 - **🎨 Modern UI**: Built with shadcn/ui components and Tailwind CSS
-- **🔒 Security**: Row Level Security (RLS) policies for data protection
+- **🔒 Security**: Advanced authentication and authorization patterns
 
 ## 🛠️ Tech Stack
 
 - **Framework**: [Next.js 15](https://nextjs.org/) with App Router
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
-- **Database**: [Supabase](https://supabase.com/) (PostgreSQL)
-- **Authentication**: [Supabase Auth](https://supabase.com/auth)
+- **Database**: [PostgreSQL](https://www.postgresql.org/)
+- **Authentication**: [Better Auth](https://betterauth.io/) for authentication and session management
 - **Deployment**: [Vercel](https://vercel.com/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Icons**: [Lucide React](https://lucide.dev/)
@@ -46,7 +46,7 @@ A modern, responsive personal portfolio website built with Next.js, featuring a 
 │   ├── navigation.tsx    
 │   └── theme-provider.tsx
 ├── lib/                
-│   └── supabase/        
+│   └── auth/        
 ├── scripts/             
 └── hooks/               
 ```
