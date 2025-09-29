@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { createClient } from "@/lib/supabase/client";
+import { signIn } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
