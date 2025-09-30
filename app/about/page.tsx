@@ -20,38 +20,7 @@ import { AnimatedSection } from "@/components/animated-section";
 import ContactInfo from "@/components/contact-info";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/footer";
-import { serverHttpClient } from "@/lib/server/http";
-import { GetTimeLines } from "@/schemas/timeline";
-
-const timelineData = [
-  {
-    startYear: "Feb 2025",
-    endYear: "Present",
-    title: "Intelligent Software Engineering",
-    company: "UET - VNU",
-    location: "Hanoi, Vietnam",
-    type: "work",
-    description: "Competitive Programming, Algorithms and Datastructures, C++",
-    achievements: ["Questin - Admission and Career Guidance Chatbot "],
-    technologies: [],
-  },
-  {
-    startYear: "Aug 2021",
-    endYear: "May 2024",
-    title: "High School for Gifted Students",
-    company: "HUS - VNU",
-    location: "Hanoi, Vietnam",
-    type: "work",
-    description: "Competitive Programming, Algorithms and Datastructures, C++",
-    achievements: [
-      "GPA: 9.5/10 (Grade 12)",
-      "Informatics Team Member",
-      "Third Prize, VNU Excellent Student Contest",
-      "Bronze Medal, HSGSO (Informatics)",
-    ],
-    technologies: [],
-  },
-];
+import { PrismaClient } from "@/generated/prisma";
 
 const personalProjects = [
   {
@@ -130,10 +99,11 @@ const skills = [
   },
 ];
 
+const prisma = new PrismaClient();
+
 export default async function AboutPage() {
-  const {
-    payload: { data: timeLineData },
-  } = await serverHttpClient.get<GetTimeLines>("/timeline");
+  const timelineData = await prisma.timeline.findMany();
+  console.log(timelineData[1].technologies.length)
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -247,7 +217,7 @@ export default async function AboutPage() {
               <div className="absolute left-4 md:left-1/2 top-0 h-full w-0.5 bg-border transform -translate-x-1/2"></div>
 
               <div className="space-y-12">
-                {timeLineData.map((item, index) => (
+                {timelineData.map((item, index) => (
                   <div key={index} className="relative">
                     <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background z-10"></div>
                     <div
@@ -289,9 +259,10 @@ export default async function AboutPage() {
                           <div className="mb-4">
                             <h4 className="font-medium mb-2">Achievements</h4>
                             <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                              {item.achievements.map((achievement, i) => (
-                                <li key={i}>{achievement}</li>
-                              ))}
+                              {item.achievements.length > 0 &&
+                                item.achievements.map((achievement, i) => (
+                                  <li key={i}>{achievement}</li>
+                                ))}
                             </ul>
                           </div>
 
@@ -302,15 +273,16 @@ export default async function AboutPage() {
                                 : ""}
                             </h4>
                             <div className="flex flex-wrap gap-2">
-                              {item.technologies.map((tech) => (
-                                <Badge
-                                  key={tech}
-                                  variant="secondary"
-                                  className="text-xs"
-                                >
-                                  {tech}
-                                </Badge>
-                              ))}
+                              {item.technologies.length > 0 &&
+                                item.technologies.map((tech) => (
+                                  <Badge
+                                    key={tech}
+                                    variant="secondary"
+                                    className="text-xs"
+                                  >
+                                    {tech}
+                                  </Badge>
+                                ))}
                             </div>
                           </div>
                         </CardContent>

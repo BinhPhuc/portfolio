@@ -1,18 +1,20 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { LogOut } from "lucide-react";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
+  const session = await auth.api.getSession({
+    headers: headers(),
+  });
 
-  if (error || !data?.user) {
+  if (!session) {
     redirect("/auth/login");
   }
 
@@ -26,7 +28,7 @@ export default async function AdminLayout({
             </Link>
             <div className="flex items-center gap-4">
               <span className="text-sm text-muted-foreground">
-                {data.user.email}
+                {session.user.email}
               </span>
               <form action="/auth/signout" method="post">
                 <Button variant="outline" size="sm" type="submit">
