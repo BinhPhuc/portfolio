@@ -103,7 +103,6 @@ const prisma = new PrismaClient();
 
 export default async function AboutPage() {
   const timelineData = await prisma.timeline.findMany();
-  console.log(timelineData[1].technologies.length)
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
