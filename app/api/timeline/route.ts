@@ -1,10 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
+import { PrismaClient } from "@/generated/prisma";
 import { CreateTimelineBody, createTimelineSchema } from "@/schemas/timeline";
 import { NextRequest, NextResponse } from "next/server";
 
+const prisma = new PrismaClient();
+
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient();
     const rawBody: CreateTimelineBody = await request.json();
     const {
       success,
@@ -16,26 +17,26 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: parseError }, { status: 400 });
     }
 
-    const { data: timelineEntry, error: insertError } = await supabase
-      .from("time_line")
-      .insert([
-        {
-          title: body.title,
-          company: body.company,
-          location: body.location,
-          type: body.type,
-          description: body.description,
-          achievements: body.achievements || [],
-          technologies: body.technologies || [],
-          start_year: body.start_year,
-          end_year: body.end_year,
-        },
-      ])
-      .select()
-      .single();
+    const timelineEntry = await prisma.timeline.create({
+      data: {
+        title: body.title,
+        company: body.company,
+        location: body.location,
+        type: body.type,
+        description: body.description,
+        achievements: body.achievements || [],
+        technologies: body.technologies || [],
+        start_year: body.start_year,
+        end_year: body.end_year,
+        priority: body.priority,
+      },
+    });
 
-    if (insertError) {
-      return NextResponse.json({ error: insertError.message }, { status: 400 });
+    if (!timelineEntry) {
+      return NextResponse.json(
+        { error: "Timeline entry not created" },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ data: timelineEntry }, { status: 201 });
@@ -49,15 +50,17 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    const supabase = await createClient();
+    const timeLine = await prisma.timeline.findMany({
+      orderBy: {
+        priority: "asc",
+      },
+    });
 
-    const { data: timeLine, error } = await supabase
-      .from("time_line")
-      .select("*")
-      .order("start_year", { ascending: false });
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+    if (!timeLine) {
+      return NextResponse.json(
+        { error: "Timeline not found" },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json({

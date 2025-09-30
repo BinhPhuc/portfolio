@@ -79,6 +79,7 @@ model Timeline {
   description  String
   achievements String[]
   technologies String[]
+  priority     Int
 
   @@map("timeline")
 }

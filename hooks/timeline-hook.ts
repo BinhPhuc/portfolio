@@ -13,7 +13,7 @@ export const useSetTimeLine = () => {
     mutationKey: ["setTimeLine"],
     mutationFn: async (body: CreateTimelineBody) => {
       const response = await timelineService.create(body);
-      return response;
+      return response.payload;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getTimeLines"] });
@@ -27,8 +27,8 @@ export const useGetTimeLines = () => {
     queryKey: ["getTimeLines"],
     queryFn: async () => {
       const response = await timelineService.getAll();
-      return response;
+      return response.payload;
     },
   });
-  return { timeLines, loading };
+  return { timeLines: timeLines ?? [], loading };
 };

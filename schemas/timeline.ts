@@ -10,6 +10,7 @@ export const createTimelineSchema = z.object({
   description: z.string().min(1, "Description is required"),
   achievements: z.array(z.string()),
   technologies: z.array(z.string()),
+  priority: z.number(),
 });
 
 export type CreateTimelineBody = z.infer<typeof createTimelineSchema>;
@@ -17,7 +18,7 @@ export type CreateTimelineBody = z.infer<typeof createTimelineSchema>;
 export type GetTimeLines = {
   data: (CreateTimelineBody & {
     id: string;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
   })[];
 };

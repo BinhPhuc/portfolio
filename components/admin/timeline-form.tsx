@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,6 +17,7 @@ import {
 import { Save, Plus, X } from "lucide-react";
 import type { CreateTimelineBody } from "@/schemas/timeline";
 import { useSetTimeLine } from "@/hooks/timeline-hook";
+import toast from "react-hot-toast";
 
 interface TimelineFormProps {
   initialData?: CreateTimelineBody;
@@ -39,10 +39,28 @@ export function TimelineForm({ initialData }: TimelineFormProps) {
     description: initialData?.description || "",
     achievements: initialData?.achievements || [],
     technologies: initialData?.technologies || [],
+    priority: initialData?.priority || 1,
   });
 
   const [newAchievement, setNewAchievement] = useState("");
   const [newTechnology, setNewTechnology] = useState("");
+
+  const resetForm = () => {
+    setFormData({
+      start_year: "",
+      end_year: "",
+      title: "",
+      company: "",
+      location: "",
+      type: "work",
+      description: "",
+      achievements: [],
+      technologies: [],
+      priority: 1,
+    });
+    setNewAchievement("");
+    setNewTechnology("");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     if (loading) return;
@@ -54,9 +72,7 @@ export function TimelineForm({ initialData }: TimelineFormProps) {
       const timelineData = {
         ...formData,
       };
-
       await setTimeLine(timelineData);
-
       if (setTimeLineError) {
         setError(
           setTimeLineError instanceof Error
@@ -65,9 +81,9 @@ export function TimelineForm({ initialData }: TimelineFormProps) {
         );
         return;
       }
-
+      resetForm();
+      toast.success("Timeline entry saved successfully!");
       router.push("/admin/timeline");
-      router.refresh();
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
@@ -189,22 +205,41 @@ export function TimelineForm({ initialData }: TimelineFormProps) {
               />
             </div>
 
-            <div className="grid gap-2">
-              <Label htmlFor="type">Type</Label>
-              <Select
-                value={formData.type}
-                onValueChange={(value: "work" | "education") =>
-                  setFormData((prev) => ({ ...prev, type: value }))
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="work">Work</SelectItem>
-                  <SelectItem value="education">Education</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="flex gap-1">
+              <div className="flex-1 grid gap-2">
+                <Label htmlFor="type">Type</Label>
+                <Select
+                  value={formData.type}
+                  onValueChange={(value: "work" | "education") =>
+                    setFormData((prev) => ({ ...prev, type: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="work">Work</SelectItem>
+                    <SelectItem value="education">Education</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="w-[100px] grid gap-2">
+                <Label htmlFor="priority">Priority</Label>
+                <Input
+                  id="priority"
+                  type="number"
+                  value={formData.priority}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      priority: parseInt(e.target.value) || 1,
+                    }))
+                  }
+                  min="1"
+                  placeholder="1"
+                  required
+                />
+              </div>
             </div>
 
             <div className="grid gap-2">

@@ -102,7 +102,11 @@ const skills = [
 const prisma = new PrismaClient();
 
 export default async function AboutPage() {
-  const timelineData = await prisma.timeline.findMany();
+  const timelineData = await prisma.timeline.findMany({
+    orderBy: {
+      priority: "asc",
+    },
+  });
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
