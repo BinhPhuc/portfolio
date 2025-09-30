@@ -3,10 +3,9 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Analytics } from "@vercel/analytics/next";
-import { Suspense } from "react";
 import "./globals.css";
-import Loading from "@/app/loading";
 import AppProvider from "@/components/app-provider";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Portfolio - Pham Phuc Binh",
@@ -22,7 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          {children}
+          <Toaster position="top-right" reverseOrder={false} />
+        </AppProvider>
         <Analytics />
       </body>
     </html>

@@ -4,14 +4,14 @@ import { headers } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const session = await getCookieCache(request);
-  const pathName = request.nextUrl.pathname;
+  // const session = await getCookieCache(request);
+  // const pathName = request.nextUrl.pathname;
 
-  if (pathName.startsWith("/admin")) {
-    if (!session) {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
-    }
-  }
+  // if (pathName.startsWith("/admin")) {
+  //   if (!session) {
+  //     return NextResponse.redirect(new URL("/auth/login", request.url));
+  //   }
+  // }
 
   return NextResponse.next();
 }

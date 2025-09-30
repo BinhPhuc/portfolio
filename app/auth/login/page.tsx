@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Navbar } from "@/components/navbar";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,7 +31,20 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      await signIn.email({ email, password, callbackURL: "/admin" });
+      await signIn.email({
+        email,
+        password,
+        callbackURL: "/admin",
+        fetchOptions: {
+          onSuccess() {
+            toast.success("Logged in successfully!");
+          },
+          onError(context) {
+            setError(context.error.message);
+            toast.error(context.error.message);
+          },
+        },
+      });
       if (error) throw error;
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Something went wrong");
