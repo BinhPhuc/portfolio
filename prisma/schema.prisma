@@ -4,10 +4,6 @@ generator client {
   output   = "../generated/prisma"
 }
 
-generator seed {
-  provider = "ts-node --transpile-only prisma/seed.ts"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
