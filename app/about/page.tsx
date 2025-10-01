@@ -100,13 +100,6 @@ const skills = [
   },
 ];
 
-<<<<<<< HEAD
-=======
-const prisma = new PrismaClient();
-
-export const dynamic = 'force-dynamic';
-
->>>>>>> 9fd907040beb710066b15e036886308ab83f2ec8
 export default async function AboutPage() {
   const timelineData = await prisma.timeline.findMany({
     orderBy: {
