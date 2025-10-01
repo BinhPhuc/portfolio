@@ -2,36 +2,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { PlusCircle, FileText, Cog } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 export default async function AdminPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
+          <div className="mb-4">
             <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
             <p className="text-muted-foreground">
               Manage your blog posts and website content
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Cog className="h-5 w-5 text-primary" />
-                  Admin Settings
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Configure general website settings and permissions
-                </p>
-                <Button variant="outline" asChild className="w-full">
-                  <Link href="/admin/settings">Admin Settings</Link>
-                </Button>
-              </CardContent>
-            </Card>
           </div>
 
           <section className="mb-12">
@@ -150,6 +132,27 @@ export default async function AdminPage() {
               </Card>
             </div>
           </section>
+
+          <Separator className="" />
+
+          <div className="grid md:grid-cols-2 gap-6 mb-12 mt-4">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Cog className="h-5 w-5 text-primary" />
+                  Admin Settings
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Configure general website settings and permissions
+                </p>
+                <Button variant="outline" asChild className="w-full">
+                  <Link href="/admin/settings">Admin Settings</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
 
           <Card>
             <CardHeader>
