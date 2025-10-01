@@ -7,10 +7,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+<<<<<<< HEAD
 import Link from "next/link";
+=======
+>>>>>>> 9fd907040beb710066b15e036886308ab83f2ec8
 import React from "react";
 
-export default function page() {
+export default function NewTimelinePage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
@@ -26,14 +29,18 @@ export default function page() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
+<<<<<<< HEAD
                 <BreadcrumbPage>New Timeline</BreadcrumbPage>
+=======
+                <BreadcrumbPage>Tạo mới</BreadcrumbPage>
+>>>>>>> 9fd907040beb710066b15e036886308ab83f2ec8
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">Create Timeline Entry</h1>
-            <p className="text-muted-foreground">Add new timeline entry</p>
+            <h1 className="text-3xl font-bold mb-2">Tạo Timeline Entry</h1>
+            <p className="text-muted-foreground">Thêm timeline entry mới</p>
           </div>
 
           <TimelineForm />
