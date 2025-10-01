@@ -1,10 +1,7 @@
 import { config } from "dotenv";
 config();
-import { PrismaClient } from "../generated/prisma";
 import { signUp } from "@/lib/auth-client";
-import { env } from "process";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 async function main() {
   const existingAdmin = await prisma.user.findUnique({

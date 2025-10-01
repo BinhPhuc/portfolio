@@ -14,13 +14,14 @@ import {
   Instagram,
   Facebook,
   ExternalLink,
+  GraduationCap,
 } from "lucide-react";
 import { HeroSection } from "@/app/about/hero-section";
 import { AnimatedSection } from "@/components/animated-section";
 import ContactInfo from "@/components/contact-info";
 import { Navbar } from "@/components/navbar";
 import Footer from "@/components/footer";
-import { PrismaClient } from "@/generated/prisma";
+import { prisma } from "@/lib/prisma";
 
 const personalProjects = [
   {
@@ -98,8 +99,6 @@ const skills = [
     items: ["Git", "Docker", "AWS", "Vercel"],
   },
 ];
-
-const prisma = new PrismaClient();
 
 export default async function AboutPage() {
   const timelineData = await prisma.timeline.findMany({
@@ -233,11 +232,18 @@ export default async function AboutPage() {
                           <div className="flex flex-col gap-2">
                             <CardTitle className="flex items-center gap-2">
                               {item.type === "work" ? (
-                                <Briefcase className="h-5 w-5" />
+                                <Briefcase className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                               ) : (
-                                <Award className="h-5 w-5" />
+                                <GraduationCap className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                               )}
-                              {item.title}
+                              <Badge
+                                variant={
+                                  item.type === "work" ? "default" : "secondary"
+                                }
+                                className="text-xs"
+                              >
+                                {item.type === "work" ? "Work" : "Education"}
+                              </Badge>
                             </CardTitle>
                             <div className="flex flex-col sm:flex-row items-start gap-2 text-sm text-muted-foreground">
                               <span className="font-medium">
