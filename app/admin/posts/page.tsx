@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { PlusCircle, Edit, Eye } from "lucide-react";
+import { CirclePlus as PlusCircle, CreditCard as Edit, Eye } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { vi } from "date-fns/locale";
 import { DeletePostButton } from "@/components/admin/delete-post-button";

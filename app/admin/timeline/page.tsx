@@ -10,7 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
-import { PlusCircle, Edit, Briefcase, GraduationCap } from "lucide-react";
+import { CirclePlus as PlusCircle, CreditCard as Edit, Briefcase, GraduationCap } from "lucide-react";
 
 const MOCK_TIMELINES = [
   {
