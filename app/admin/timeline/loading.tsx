@@ -16,7 +16,6 @@ export default function TimelineLoading() {
             <Skeleton className="h-10 w-40" />
           </div>
 
-<<<<<<< HEAD
           <div className="grid gap-6">
             {[1, 2, 3, 4].map((i) => (
               <Card key={i}>
@@ -49,68 +48,8 @@ export default function TimelineLoading() {
                         <Skeleton className="h-4 w-full" />
                         <Skeleton className="h-4 w-full" />
                         <Skeleton className="h-4 w-5/6" />
-=======
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Card key={i} className="flex flex-col">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <Skeleton className="h-5 w-5 rounded" />
-                    <Skeleton className="h-5 w-16 rounded-full" />
-                  </div>
-                  <Skeleton className="h-6 w-full mb-2" />
-                  <Skeleton className="h-6 w-3/4 mb-3" />
-                  <div className="space-y-1.5">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-40" />
-                    <Skeleton className="h-3 w-28" />
-                  </div>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col">
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-2/3 mb-4" />
-
-                  <div className="space-y-3 flex-1">
-                    <div>
-                      <Skeleton className="h-3 w-16 mb-1.5" />
-                      <div className="space-y-1">
-                        <Skeleton className="h-3 w-full" />
-                        <Skeleton className="h-3 w-full" />
-                        <Skeleton className="h-3 w-4/5" />
->>>>>>> 9fd907040beb710066b15e036886308ab83f2ec8
                       </div>
                     </div>
-
-                    <div>
-<<<<<<< HEAD
-                      <Skeleton className="h-4 w-24 mb-2" />
-                      <div className="flex gap-2">
-                        <Skeleton className="h-6 w-16 rounded" />
-                        <Skeleton className="h-6 w-20 rounded" />
-                        <Skeleton className="h-6 w-24 rounded" />
-                        <Skeleton className="h-6 w-16 rounded" />
-=======
-                      <Skeleton className="h-3 w-16 mb-1.5" />
-                      <div className="flex flex-wrap gap-1.5">
-                        <Skeleton className="h-5 w-14 rounded" />
-                        <Skeleton className="h-5 w-16 rounded" />
-                        <Skeleton className="h-5 w-20 rounded" />
-                        <Skeleton className="h-5 w-12 rounded" />
->>>>>>> 9fd907040beb710066b15e036886308ab83f2ec8
-                      </div>
-                    </div>
-                  </div>
-
-<<<<<<< HEAD
-                  <div className="mt-6 pt-4 border-t border-border flex items-center justify-between">
-                    <Skeleton className="h-4 w-20" />
-                    <Skeleton className="h-9 w-28 rounded" />
-=======
-                  <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
-                    <Skeleton className="h-3 w-16" />
-                    <Skeleton className="h-8 w-8 rounded" />
->>>>>>> 9fd907040beb710066b15e036886308ab83f2ec8
                   </div>
                 </CardContent>
               </Card>
