@@ -1,18 +1,11 @@
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { PostForm } from "@/components/admin/post-form";
 
 export default async function NewPostPage() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
-    redirect("/auth/login");
-  }
-
+  // TODO: handle manage session
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
@@ -31,7 +24,7 @@ export default async function NewPostPage() {
             </p>
           </div>
 
-          <PostForm userId={data.user.id} />
+          {/* <PostForm userId={data.user.id} /> */}
         </div>
       </div>
     </div>

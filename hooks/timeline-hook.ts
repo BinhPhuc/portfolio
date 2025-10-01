@@ -28,7 +28,7 @@ export const useSetTimeLine = () => {
       return response.payload;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["getTimeLines"] });
+      queryClient.invalidateQueries({ queryKey: ["timeLines"] });
     },
   });
   return { data, loading, error, setTimeLine };
@@ -36,7 +36,7 @@ export const useSetTimeLine = () => {
 
 export const useGetTimeLines = () => {
   const { data: timeLines, isPending: loading } = useQuery({
-    queryKey: ["getTimeLines"],
+    queryKey: ["timeLines"],
     queryFn: async () => {
       const response = await timelineService.getAll();
       return response.payload;
@@ -44,3 +44,23 @@ export const useGetTimeLines = () => {
   });
   return { timeLines: timeLines ?? [], loading };
 };
+
+export const useDeleteTimeLine = () => {
+  const queryClient = useQueryClient();
+  const {
+    data, 
+    isPending: loading,
+    mutateAsync: deleteTimeLine,
+    error,
+  } = useMutation({
+    mutationKey: ["deleteTimeLine"],
+    mutationFn: async (id: string) => {
+      const response = await timelineService.delete(id);
+      return response.payload;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["timeLines"] });
+    },
+  });
+  return { data, loading, error, deleteTimeLine };
+}

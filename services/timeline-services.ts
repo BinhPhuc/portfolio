@@ -9,4 +9,6 @@ export const timelineService = {
     httpClient.put<CreateTimelineBody>(`/timeline/update/${id}`, data),
 
   getAll: () => httpClient.get<GetTimeLines>("/timeline"),
+
+  delete: (id: string) => httpClient.delete(`/timeline/delete/${id}`),
 };

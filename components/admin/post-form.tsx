@@ -4,7 +4,6 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -62,25 +61,23 @@ export function PostForm({ userId, initialData }: PostFormProps) {
     setIsLoading(true)
     setError(null)
 
-    const supabase = createClient()
-
     try {
       const postData = {
         ...formData,
         published: asDraft ? false : formData.published,
         user_id: userId,
       }
+      // TODO: Replace with actual API call to your backend or database
+      // let result
+      // if (initialData?.id) {
+      //   // Update existing post
+      //   result = await supabase.from("blog_posts").update(postData).eq("id", initialData.id).eq("user_id", userId)
+      // } else {
+      //   // Create new post
+      //   result = await supabase.from("blog_posts").insert([postData])
+      // }
 
-      let result
-      if (initialData?.id) {
-        // Update existing post
-        result = await supabase.from("blog_posts").update(postData).eq("id", initialData.id).eq("user_id", userId)
-      } else {
-        // Create new post
-        result = await supabase.from("blog_posts").insert([postData])
-      }
-
-      if (result.error) throw result.error
+      // if (result.error) throw result.error
 
       router.push("/admin/posts")
       router.refresh()

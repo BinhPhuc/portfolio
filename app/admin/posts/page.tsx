@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,10 +19,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { CirclePlus as PlusCircle, CreditCard as Edit, Eye } from "lucide-react";
+import {
+  CirclePlus as PlusCircle,
+  CreditCard as Edit,
+  Eye,
+} from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { vi } from "date-fns/locale";
-import { DeletePostButton } from "@/components/admin/delete-post-button";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 interface BlogPost {
   id: string;
@@ -36,30 +40,20 @@ interface BlogPost {
 }
 
 export default async function AdminPostsPage() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
+  const session = await auth.api.getSession({
+    headers: headers(),
+  });
+  
+  if (!session) {
     redirect("/auth/login");
   }
 
-  // Fetch all blog posts (including drafts)
-  const { data: posts, error: postsError } = await supabase
-    .from("blog_posts")
-    .select("id, title, excerpt, slug, published, created_at, updated_at")
-    .eq("user_id", data.user.id)
-    .order("created_at", { ascending: false });
-
-  if (postsError) {
-    console.error("Error fetching posts:", postsError);
-  }
-
-  const blogPosts = posts || [];
+  const blogPosts: any[] = [];
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <Breadcrumb className="mb-6">
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -150,10 +144,10 @@ export default async function AdminPostsPage() {
                                 <Edit className="h-4 w-4" />
                               </Link>
                             </Button>
-                            <DeletePostButton
+                            {/* <DeletePostButton
                               postId={post.id}
                               postTitle={post.title}
-                            />
+                            /> */}
                           </div>
                         </TableCell>
                       </TableRow>

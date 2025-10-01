@@ -17,6 +17,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { DeleteTimelineButton } from "@/components/admin/delete-timeline";
 
 export default async function TimelineManagePage() {
   const timeLines = await prisma.timeline.findMany({
@@ -25,7 +26,7 @@ export default async function TimelineManagePage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <Breadcrumb className="mb-6">
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -50,7 +51,7 @@ export default async function TimelineManagePage() {
             </Button>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
             {timeLines.map((timeline, index) => (
               <Card
                 key={timeline.id}
@@ -129,11 +130,14 @@ export default async function TimelineManagePage() {
                     <div className="text-xs text-muted-foreground">
                       Priority: {timeline.priority}
                     </div>
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link href={`/admin/timeline/${timeline.id}/edit`}>
-                        <Edit className="h-3.5 w-3.5" />
-                      </Link>
-                    </Button>
+                    <div className="flex items-center transition-opacity">
+                      <DeleteTimelineButton timelineId={timeline.id} />
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link href={`/admin/timeline/${timeline.id}/edit`}>
+                          <Edit className="h-3.5 w-3.5" />
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
