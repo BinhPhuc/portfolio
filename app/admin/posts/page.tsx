@@ -4,6 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
   Table,
   TableBody,
   TableCell,
@@ -12,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { PlusCircle, Edit, Eye, ArrowLeft } from "lucide-react";
+import { PlusCircle, Edit, Eye } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { vi } from "date-fns/locale";
 import { DeletePostButton } from "@/components/admin/delete-post-button";
@@ -52,12 +60,18 @@ export default async function AdminPostsPage() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-6xl mx-auto">
-          <Button variant="ghost" asChild className="mb-6">
-            <Link href="/admin">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Về trang admin
-            </Link>
-          </Button>
+          <Breadcrumb className="mb-6">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/admin">Admin</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Posts</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold mb-2">Quản lý bài viết</h1>

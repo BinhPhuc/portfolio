@@ -1,24 +1,38 @@
 import { TimelineForm } from "@/components/admin/timeline-form";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import React from "react";
 
-export default function page() {
+export default function NewTimelinePage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-4xl mx-auto">
-          <Button variant="ghost" asChild className="mb-6">
-            <Link href="/admin/timeline">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Timeline Manage Page
-            </Link>
-          </Button>
+          <Breadcrumb className="mb-6">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/admin">Admin</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/admin/timeline">Timeline</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Tạo mới</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">Create Timeline Entry</h1>
-            <p className="text-muted-foreground">Add new timeline entry</p>
+            <h1 className="text-3xl font-bold mb-2">Tạo Timeline Entry</h1>
+            <p className="text-muted-foreground">Thêm timeline entry mới</p>
           </div>
 
           <TimelineForm />
