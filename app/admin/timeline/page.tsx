@@ -123,85 +123,87 @@ export default function TimelineManagePage() {
             </Button>
           </div>
 
-          <div className="grid gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {MOCK_TIMELINES.map((timeline, index) => (
               <Card
                 key={timeline.id}
-                className="group hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer animate-in fade-in slide-in-from-bottom-4"
+                className="group hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer animate-in fade-in slide-in-from-bottom-4 flex flex-col"
                 style={{
                   animationDelay: `${index * 100}ms`,
                 }}
               >
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        {timeline.type === "work" ? (
-                          <Briefcase className="h-5 w-5 text-primary" />
-                        ) : (
-                          <GraduationCap className="h-5 w-5 text-primary" />
-                        )}
-                        <CardTitle className="text-xl group-hover:text-primary transition-colors">
-                          {timeline.title}
-                        </CardTitle>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                        <span className="font-medium">{timeline.company}</span>
-                        <span>•</span>
-                        <span>{timeline.location}</span>
-                        <span>•</span>
-                        <span>{timeline.start_year} - {timeline.end_year}</span>
-                      </div>
-                    </div>
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    {timeline.type === "work" ? (
+                      <Briefcase className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    ) : (
+                      <GraduationCap className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    )}
                     <Badge
                       variant={timeline.type === "work" ? "default" : "secondary"}
-                      className="ml-4"
+                      className="text-xs"
                     >
                       {timeline.type === "work" ? "Công việc" : "Học vấn"}
                     </Badge>
                   </div>
+                  <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
+                    {timeline.title}
+                  </CardTitle>
+                  <div className="space-y-1 text-sm text-muted-foreground">
+                    <p className="font-medium">{timeline.company}</p>
+                    <p className="text-xs">{timeline.location}</p>
+                    <p className="text-xs">{timeline.start_year} - {timeline.end_year}</p>
+                  </div>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
+                <CardContent className="flex-1 flex flex-col">
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
                     {timeline.description}
                   </p>
 
-                  <div className="space-y-4">
+                  <div className="space-y-3 flex-1">
                     <div>
-                      <h4 className="text-sm font-semibold mb-2">Thành tựu:</h4>
-                      <ul className="list-disc list-inside space-y-1">
-                        {timeline.achievements.map((achievement, i) => (
-                          <li key={i} className="text-sm text-muted-foreground">
-                            {achievement}
+                      <h4 className="text-xs font-semibold mb-1.5">Thành tựu:</h4>
+                      <ul className="space-y-1">
+                        {timeline.achievements.slice(0, 3).map((achievement, i) => (
+                          <li key={i} className="text-xs text-muted-foreground flex gap-1.5">
+                            <span className="text-primary mt-1">•</span>
+                            <span className="line-clamp-1">{achievement}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
                     <div>
-                      <h4 className="text-sm font-semibold mb-2">Công nghệ:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {timeline.technologies.map((tech, i) => (
+                      <h4 className="text-xs font-semibold mb-1.5">Công nghệ:</h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {timeline.technologies.slice(0, 4).map((tech, i) => (
                           <Badge
                             key={i}
                             variant="outline"
-                            className="group-hover:border-primary/50 transition-colors"
+                            className="text-xs px-2 py-0 h-5 group-hover:border-primary/50 transition-colors"
                           >
                             {tech}
                           </Badge>
                         ))}
+                        {timeline.technologies.length > 4 && (
+                          <Badge
+                            variant="outline"
+                            className="text-xs px-2 py-0 h-5"
+                          >
+                            +{timeline.technologies.length - 4}
+                          </Badge>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-border flex items-center justify-between">
+                  <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
                     <div className="text-xs text-muted-foreground">
                       Priority: {timeline.priority}
                     </div>
-                    <Button variant="outline" size="sm" asChild>
+                    <Button variant="ghost" size="sm" asChild>
                       <Link href={`/admin/timeline/${timeline.id}/edit`}>
-                        <Edit className="h-4 w-4 mr-2" />
-                        Chỉnh sửa
+                        <Edit className="h-3.5 w-3.5" />
                       </Link>
                     </Button>
                   </div>

@@ -101,6 +101,8 @@ const skills = [
 
 const prisma = new PrismaClient();
 
+export const dynamic = 'force-dynamic';
+
 export default async function AboutPage() {
   const timelineData = await prisma.timeline.findMany({
     orderBy: {
