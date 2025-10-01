@@ -21,9 +21,10 @@ import toast from "react-hot-toast";
 
 interface TimelineFormProps {
   initialData?: CreateTimelineBody;
+  id?: string;
 }
 
-export function TimelineForm({ initialData }: TimelineFormProps) {
+export function TimelineForm({ initialData, id }: TimelineFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -72,7 +73,11 @@ export function TimelineForm({ initialData }: TimelineFormProps) {
       const timelineData = {
         ...formData,
       };
-      await setTimeLine(timelineData);
+      await setTimeLine({
+        body: timelineData,
+        type: initialData ? "update" : "create",
+        id
+      });
       if (setTimeLineError) {
         setError(
           setTimeLineError instanceof Error
@@ -82,7 +87,9 @@ export function TimelineForm({ initialData }: TimelineFormProps) {
         return;
       }
       resetForm();
-      toast.success("Timeline entry saved successfully!");
+      toast.success(
+        `Timeline ${initialData ? "updated" : "created"} successfully!`
+      );
       router.push("/admin/timeline");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");

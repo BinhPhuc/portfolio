@@ -3,7 +3,10 @@ import { CreateTimelineBody, GetTimeLines } from "@/schemas/timeline";
 
 export const timelineService = {
   create: (data: CreateTimelineBody) =>
-    httpClient.post<CreateTimelineBody>("/timeline", data),
+    httpClient.post<CreateTimelineBody>("/timeline/create", data),
+
+  update: (data: CreateTimelineBody, id: string) =>
+    httpClient.put<CreateTimelineBody>(`/timeline/update/${id}`, data),
 
   getAll: () => httpClient.get<GetTimeLines>("/timeline"),
 };

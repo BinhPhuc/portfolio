@@ -7,10 +7,24 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { notFound } from "next/navigation";
 import React from "react";
 
-export default function page() {
+export default async function EditTimelinePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const timeline = await prisma.timeline.findUnique({
+    where: { id },
+  });
+
+  if (!timeline) {
+    notFound();
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
@@ -26,17 +40,25 @@ export default function page() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>New Timeline</BreadcrumbPage>
+                <BreadcrumbPage>Edit Timeline</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">Create Timeline Entry</h1>
-            <p className="text-muted-foreground">Add new timeline entry</p>
+            <h1 className="text-3xl font-bold mb-2">
+              Edit Timeline Entry
+            </h1>
+            <p className="text-muted-foreground">Update timeline information</p>
           </div>
 
-          <TimelineForm />
+          <TimelineForm
+            initialData={{
+              ...timeline,
+              type: timeline.type as "work" | "education",
+            }}
+            id={timeline.id}
+          />
         </div>
       </div>
     </div>

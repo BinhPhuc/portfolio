@@ -11,7 +11,19 @@ export const useSetTimeLine = () => {
     error,
   } = useMutation({
     mutationKey: ["setTimeLine"],
-    mutationFn: async (body: CreateTimelineBody) => {
+    mutationFn: async ({
+      body,
+      type,
+      id,
+    }: {
+      body: CreateTimelineBody;
+      type: "create" | "update";
+      id?: string;
+    }) => {
+      if (type === "update" && id) {
+        const response = await timelineService.update(body, id);
+        return response.payload;
+      }
       const response = await timelineService.create(body);
       return response.payload;
     },
