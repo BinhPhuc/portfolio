@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build && npm run db:seed || true",
+    "build": "next build",
     "dev": "next dev",
     "db:pull": "npx prisma db pull",
     "db:generate": "npx prisma generate",
