@@ -2,14 +2,12 @@ services:
   postgres:
     image: postgres:18-alpine
     container_name: postgres
-    hostname: ${DB_HOST}
     restart: always
     environment:
-      POSTGRES_USER: postgres 
-      POSTGRES_PASSWORD: rootpassword
-      POSTGRES_DB: portfolio
-      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
-      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_INITDB_ARGS: ${DB_INITDB_ARGS}
     ports:
       - "5432:5432"
     volumes:
