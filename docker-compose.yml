@@ -1,4 +1,21 @@
 services:
+
+  portfolio:
+    build: .
+    container_name: portfolio
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}?schema=public
+    # volumes:
+    #   - ./:/app
+    networks:
+      - portfolio-networks
+
   postgres:
     image: postgres:18-alpine
     container_name: postgres
@@ -13,6 +30,17 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - pgdata:/var/lib/postgresql
+    networks:
+      - portfolio-networks
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${DB_USER} -d ${DB_NAME}'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
 volumes:
   pgdata:
+
+networks:
+  portfolio-networks:
+    driver: bridge
