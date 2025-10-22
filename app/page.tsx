@@ -25,7 +25,7 @@ export default function HomePage() {
         <div className="container mx-auto max-w-4xl text-center">
           <div className="mb-8 relative w-[150px] h-[150px] mx-auto">
             <Image
-              src="/portfolio.jpg"
+              src="/portfolio.png"
               alt="Pham Phuc Binh"
               fill
               className="rounded-full object-cover border-4 border-primary"

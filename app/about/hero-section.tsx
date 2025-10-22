@@ -13,7 +13,7 @@ export function HeroSection() {
     >
       <div className="mb-8 relative w-[150px] h-[150px] mx-auto">
         <Image
-          src="/portfolio.jpg"
+          src="/portfolio.png"
           alt="Profile Picture"
           fill
           className="rounded-full object-cover border-4 border-primary"
