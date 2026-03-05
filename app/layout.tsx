@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import AppProvider from "@/components/app-provider";
 import { Toaster } from "react-hot-toast";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "Portfolio - Pham Phuc Binh",
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <AppProvider>
+          <NextTopLoader showSpinner={false} color="#1A1A1A" />
           {children}
           <Toaster position="top-right" reverseOrder={false} />
         </AppProvider>
