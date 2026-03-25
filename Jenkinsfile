@@ -19,7 +19,7 @@ pipeline {
         DOCKER_IMAGE = "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
         DOCKER_CONTAINER_NAME = 'portfolio'
         DOCKER_REMOVE_SCRIPT = "docker rm -f ${DOCKER_CONTAINER_NAME} || true"
-        DOCKER_RUN_SCRIPT = "docker run -d --restart always --network host --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE}"
+        DOCKER_RUN_SCRIPT = "docker run -d --restart always --network host -p 3000:3000 --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE}"
     }
 
     stages {
