@@ -6,7 +6,7 @@ pipeline {
 
         ENV_DIR = '/env-data/portfolio'
 
-        COPY_ENV_SCRIPT = 'cp ${ENV_DIR}/.env .'
+        COPY_ENV_SCRIPT = 'sudo cp ${ENV_DIR}/.env .'
 
         BUILD_DIR = '.next'
         INSTALL_SCRIPT = 'npm install'
@@ -23,6 +23,14 @@ pipeline {
     }
 
     stages {
+        stage('copy-env') {
+            agent {
+                label 'homelab-jenkins'
+            }
+            steps {
+                sh(script: ''' ${COPY_ENV_SCRIPT} ''', label: 'copy .env file for production environment')
+            }
+        }
         stage('install-dependencies') {
             agent {
                 docker {
@@ -42,14 +50,6 @@ pipeline {
                 ]) {
                     sh(script: ''' ${INSTALL_SCRIPT} ''', label: 'install project dependencies')
                 }
-            }
-        }
-        stage('copy-env') {
-            agent {
-                label 'homelab-jenkins'
-            }
-            steps {
-                sh(script: ''' ${COPY_ENV_SCRIPT} ''', label: 'copy .env file for production environment')
             }
         }
         stage('build') {
