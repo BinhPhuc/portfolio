@@ -6,20 +6,20 @@ pipeline {
 
         ENV_DIR = '/env-data/portfolio'
 
-        COPY_ENV_SCRIPT = 'sudo cp ${ENV_DIR}/.env .'
+        COPY_ENV_SCRIPT = "sudo cp ${ENV_DIR}/.env ."
 
         BUILD_DIR = '.next'
         INSTALL_SCRIPT = 'npm install'
         BUILD_SCRIPT = 'npm run build'
         SERVE_DIR = '/var/www/portfolio'
-        COPY_SCRIPT = 'rsync -avP ${BUILD_DIR}/standalone ${BUILD_DIR}/static public ${SERVE_DIR}/'
+        COPY_SCRIPT = "rsync -avP ${BUILD_DIR}/standalone ${BUILD_DIR}/static public ${SERVE_DIR}/"
 
-        DOCKER_IMAGE_NAME = 'portfolio' 
+        DOCKER_IMAGE_NAME = 'portfolio'
         DOCKER_IMAGE_TAG = 'latest'
-        DOCKER_IMAGE = '${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
+        DOCKER_IMAGE = "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
         DOCKER_CONTAINER_NAME = 'portfolio'
-        DOCKER_REMOVE_SCRIPT = 'docker rm -f ${DOCKER_CONTAINER_NAME} || true'
-        DOCKER_RUN_SCRIPT = 'docker run -d --restart always -p 3000:3000 --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE}'
+        DOCKER_REMOVE_SCRIPT = "docker rm -f ${DOCKER_CONTAINER_NAME} || true"
+        DOCKER_RUN_SCRIPT = "docker run -d --restart always -p 3000:3000 --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE}"
     }
 
     stages {
@@ -64,9 +64,9 @@ pipeline {
 
                 cache(caches: [
                     arbitraryFileCache(
-                        path: ".next/cache",
-                        includes: "**/*",
-                        cacheValidityDecidingFile: "next-lock.cache"
+                        path: '.next/cache',
+                        includes: '**/*',
+                        cacheValidityDecidingFile: 'next-lock.cache'
                     )
                 ]) {
                     sh(script: ''' ${BUILD_SCRIPT} ''', label: 'build project to static files. located in .next folder')
