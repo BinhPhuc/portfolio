@@ -57,6 +57,7 @@ pipeline {
                 docker {
                     image 'node:24-alpine'
                     label 'homelab-jenkins'
+                    args '--network host'
                 }
             }
             steps {
