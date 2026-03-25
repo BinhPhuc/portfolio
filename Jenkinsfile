@@ -4,13 +4,17 @@ pipeline {
     environment {
         HOME = '.'
 
+        ENV_DIR = '/env-data/portfolio'
+
+        COPY_ENV_SCRIPT = 'cp ${ENV_DIR}/.env .'
+
         BUILD_DIR = '.next'
         INSTALL_SCRIPT = 'npm install'
         BUILD_SCRIPT = 'npm run build'
         SERVE_DIR = '/var/www/portfolio'
         COPY_SCRIPT = 'rsync -avP ${BUILD_DIR}/standalone ${BUILD_DIR}/static public ${SERVE_DIR}/'
 
-        DOCKER_IMAGE_NAME = 'portfolio'
+        DOCKER_IMAGE_NAME = 'portfolio' 
         DOCKER_IMAGE_TAG = 'latest'
         DOCKER_IMAGE = '${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}'
         DOCKER_CONTAINER_NAME = 'portfolio'
@@ -19,6 +23,36 @@ pipeline {
     }
 
     stages {
+        stage('install-dependencies') {
+            agent {
+                docker {
+                    image 'node:24-alpine'
+                    label 'homelab-jenkins'
+                }
+            }
+            steps {
+                sh(script: ''' ${BUILD_SCRIPT} ''', label: 'build project to static files. located in .next folder')
+                writeFile file: 'next-lock.cache', text: "$GIT_COMMIT"
+
+                cache(caches: [
+                    arbitraryFileCache(
+                        path: 'node_modules',
+                        includes: '**/*',
+                        cacheValidityDecidingFile: 'package-lock.json'
+                    )
+                ]) {
+                    sh(script: ''' ${INSTALL_SCRIPT} ''', label: 'install project dependencies')
+                }
+            }
+        }
+        stage('copy-env') {
+            agent {
+                label 'homelab-jenkins'
+            }
+            steps {
+                sh(script: ''' ${COPY_ENV_SCRIPT} ''', label: 'copy .env file for production environment')
+            }
+        }
         stage('build') {
             agent {
                 docker {
@@ -27,8 +61,17 @@ pipeline {
                 }
             }
             steps {
-                sh(script: ''' ${INSTALL_SCRIPT} ''', label: 'install project dependencies')
-                sh(script: ''' ${BUILD_SCRIPT} ''', label: 'build project to static files. located in .next folder')
+                writeFile file: 'next-lock.cache', text: "$GIT_COMMIT"
+
+                cache(caches: [
+                    arbitraryFileCache(
+                        path: ".next/cache",
+                        includes: "**/*",
+                        cacheValidityDecidingFile: "next-lock.cache"
+                    )
+                ]) {
+                    sh(script: ''' ${BUILD_SCRIPT} ''', label: 'build project to static files. located in .next folder')
+                }
             }
         }
         stage('build-image') {
