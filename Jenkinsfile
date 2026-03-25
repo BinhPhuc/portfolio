@@ -12,7 +12,7 @@ pipeline {
         INSTALL_SCRIPT = 'npm install'
         BUILD_SCRIPT = 'npm run build'
         SERVE_DIR = '/var/www/portfolio'
-        COPY_SCRIPT = "rsync -avP ${BUILD_DIR}/standalone ${BUILD_DIR}/static public ${SERVE_DIR}/"
+        COPY_SCRIPT = "sudo rsync -avP ${BUILD_DIR}/standalone ${BUILD_DIR}/static public ${SERVE_DIR}/"
 
         DOCKER_IMAGE_NAME = 'portfolio'
         DOCKER_IMAGE_TAG = 'latest'
