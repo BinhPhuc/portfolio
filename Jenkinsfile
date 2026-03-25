@@ -2,6 +2,8 @@ pipeline {
     agent none
 
     environment {
+        HOME = '.'
+
         BUILD_DIR = '.next'
         INSTALL_SCRIPT = 'npm install'
         BUILD_SCRIPT = 'npm run build'
