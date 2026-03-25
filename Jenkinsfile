@@ -31,7 +31,6 @@ pipeline {
                 }
             }
             steps {
-                sh(script: ''' ${BUILD_SCRIPT} ''', label: 'build project to static files. located in .next folder')
                 writeFile file: 'next-lock.cache', text: "$GIT_COMMIT"
 
                 cache(caches: [
