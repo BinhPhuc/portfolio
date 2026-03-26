@@ -12,17 +12,12 @@ DOCKER_IMAGE = "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
 DOCKER_CONTAINER_NAME = 'portfolio'
 DOCKER_NETWORK = 'portfolio_portfolio-networks'
 
-boolean isContainerRunning(containerName) {
-    String running = "Container is running."
-    String notRunning = "Container is not running."
-    def result = sh(script: """ 
-    #!/bin/bash
-    if [ "$(docker inspect -f '{{.State.Running}}' ${containerName})" = "true" ]; then
-        return "${running}"
-    else
-        return "${notRunning}"
-    fi """, returnStdout: true).trim()
-    return result.trim() == running
+boolean isContainerRunning(String containerName) {
+    def status = sh(
+        script: "docker inspect -f '{{.State.Running}}' ${containerName} 2>/dev/null || echo false",
+        returnStdout: true
+    ).trim()
+    return status == "true"
 }
 
 def start() {
@@ -100,7 +95,7 @@ def start() {
             def interval = 5
 
             while (timeout > 0) {
-                if (isContainerRunning(${DOCKER_CONTAINER_NAME})) {
+                if (isContainerRunning(DOCKER_CONTAINER_NAME)) {
                     echo "Container ${DOCKER_CONTAINER_NAME} is running."
                     break
                 } else {
