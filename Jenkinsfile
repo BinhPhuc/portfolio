@@ -16,6 +16,7 @@ boolean isContainerRunning(containerName) {
     String running = "Container is running."
     String notRunning = "Container is not running."
     def result = sh(script: """ 
+    #!/bin/bash
     if [ "$(docker inspect -f '{{.State.Running}}' ${containerName})" = "true" ]; then
         return "${running}"
     else
