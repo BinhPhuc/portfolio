@@ -1,16 +1,22 @@
-HOME = '.'
-AGENT_LABEL = 'homelab-jenkins'
+def getCfg() {
+    // Khai báo biến cục bộ để tái sử dụng trong map
+    def imageName = 'portfolio'
+    def imageTag = 'latest'
+    
+    return [
+        HOME: '.',
+        ENV_DIR: '/env-data/portfolio',
+        BUILD_DIR: '.next',
+        SERVE_DIR: '/var/www/portfolio',
 
-ENV_DIR = '/env-data/portfolio'
-BUILD_DIR = '.next'
-SERVE_DIR = '/var/www/portfolio'
-
-DOCKER_AGENT_IMAGE = 'node:24-alpine'
-DOCKER_IMAGE_NAME = 'portfolio'
-DOCKER_IMAGE_TAG = 'latest'
-DOCKER_IMAGE = "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-DOCKER_CONTAINER_NAME = 'portfolio'
-DOCKER_NETWORK = 'portfolio_portfolio-networks'
+        DOCKER_AGENT_IMAGE: 'node:24-alpine',
+        DOCKER_IMAGE_NAME: imageName,
+        DOCKER_IMAGE_TAG: imageTag,
+        DOCKER_IMAGE: "${imageName}:${imageTag}",
+        DOCKER_CONTAINER_NAME: 'portfolio',
+        DOCKER_NETWORK: 'portfolio_portfolio-networks'
+    ]
+}
 
 boolean isContainerRunning(String containerName) {
     def status = sh(
@@ -20,24 +26,14 @@ boolean isContainerRunning(String containerName) {
     return status == "true"
 }
 
-def start() {
+def start(cfg) {
     stage('copy-env') {
-        agent {
-            label "${AGENT_LABEL}"
-        }
-        steps {
-            sh(script: """ sudo cp ${ENV_DIR}/.env . """, label: 'copy .env file for production environment')
-        }
+        sh(script: "sudo cp ${cfg.ENV_DIR}/.env .", label: 'copy .env file for production environment')
     }
+    
     stage('install-dependencies') {
-        agent {
-            docker {
-                image "${DOCKER_AGENT_IMAGE}"
-                label "${AGENT_LABEL}"
-            }
-        }
-        steps {
-            writeFile file: 'next-lock.cache', text: "$GIT_COMMIT"
+        docker.image("${cfg.DOCKER_AGENT_IMAGE}").inside("--network ${cfg.DOCKER_NETWORK}") { c ->
+            writeFile file: 'next-lock.cache', text: "${env.GIT_COMMIT}"
 
             cache(caches: [
                 arbitraryFileCache(
@@ -46,20 +42,14 @@ def start() {
                     cacheValidityDecidingFile: 'package-lock.json'
                 )
             ]) {
-                sh(script: """ npm install """, label: 'install project dependencies')
+                sh(script: "npm install", label: 'install project dependencies')
             }
         }
     }
+    
     stage('build') {
-        agent {
-            docker {
-                image "${DOCKER_AGENT_IMAGE}"
-                label "${AGENT_LABEL}"
-                args "--network ${DOCKER_NETWORK}"
-            }
-        }
-        steps {
-            writeFile file: 'next-lock.cache', text: "$GIT_COMMIT"
+        docker.image("${cfg.DOCKER_AGENT_IMAGE}").inside("--network ${cfg.DOCKER_NETWORK}") { c ->
+            writeFile file: 'next-lock.cache', text: "${env.GIT_COMMIT}"
 
             cache(caches: [
                 arbitraryFileCache(
@@ -68,53 +58,37 @@ def start() {
                     cacheValidityDecidingFile: 'next-lock.cache'
                 )
             ]) {
-                sh(script: """ npm run build """, label: 'build project to static files. located in .next folder')
+                sh(script: "npm run build", label: 'build project to static files. located in .next folder')
             }
         }
     }
+    
     stage('build-image') {
-        agent {
-            label "${AGENT_LABEL}"
-        }
-        steps {
-            sh(script: """ DOCKER_BUILDKIT=0 docker build --network ${DOCKER_NETWORK} -t ${DOCKER_IMAGE} . """, label: 'build docker image')
-        }
+        sh(script: "DOCKER_BUILDKIT=0 docker build --network ${cfg.DOCKER_NETWORK} -t ${cfg.DOCKER_IMAGE} .", label: 'build docker image')
     }
+    
     stage('deploy') {
-        agent {
-            label "${AGENT_LABEL}"
-        }
-        steps {
-            sh(script: """ sudo rsync -avP ${BUILD_DIR}/standalone ${BUILD_DIR}/static public ${SERVE_DIR}/ """, label: 'deploy static files to server')
+        sh(script: "sudo rsync -avP ${cfg.BUILD_DIR}/standalone ${cfg.BUILD_DIR}/static public ${cfg.SERVE_DIR}/", label: 'deploy static files to server')
 
-            sh(script: """ docker rm -f ${DOCKER_CONTAINER_NAME} || true """, label: 'remove old docker container if exists')
+        sh(script: "docker rm -f ${cfg.DOCKER_CONTAINER_NAME} || true", label: 'remove old docker container if exists')
 
-            sh(script: """ docker run -d --restart always --network ${DOCKER_NETWORK} -p 3000:3000 --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE} """, label: 'create docker container to serve the app')
+        sh(script: "docker run -d --restart always --network ${cfg.DOCKER_NETWORK} -p 3000:3000 --name ${cfg.DOCKER_CONTAINER_NAME} ${cfg.DOCKER_IMAGE}", label: 'create docker container to serve the app')
 
-            def timeout = 60
-            def interval = 5
-
-            while (timeout > 0) {
-                if (isContainerRunning(DOCKER_CONTAINER_NAME)) {
-                    echo "Container ${DOCKER_CONTAINER_NAME} is running."
-                    break
-                } else {
-                    echo "Waiting for container ${DOCKER_CONTAINER_NAME} to start..."
-                    sleep(interval)
-                    timeout -= interval
-                }
-            }
-
-            if (timeout <= 0) {
-                error "Container ${DOCKER_CONTAINER_NAME} failed to start within the expected time."
+        timeout(time: 1, unit: 'MINUTES') { 
+            waitUntil {
+                return isContainerRunning(cfg.DOCKER_CONTAINER_NAME)
             }
         }
     }
 }
 
 node(params.Server) {
+    def cfg = getCfg()
     currentBuild.displayName = "#${env.BUILD_NUMBER} - ${params.Action} on ${params.Server}"
+    
     if (params.Action == 'Start') {
-        start()
+        start(cfg)
+    } else {
+        echo "Action is not Start. Current Action: ${params.Action}"
     }
 }
