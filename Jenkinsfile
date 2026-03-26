@@ -13,7 +13,11 @@ def getCfg() {
         DOCKER_IMAGE_TAG: imageTag,
         DOCKER_IMAGE: "${imageName}:${imageTag}",
         DOCKER_CONTAINER_NAME: 'portfolio',
-        DOCKER_NETWORK: 'portfolio_portfolio-networks'
+        DOCKER_NETWORK: 'portfolio_portfolio-networks',
+
+        GIT_REPO_URL: 'https://github.com/BinhPhuc/portfolio.git',
+
+        CREDENTIALS_ID: 'github-auth'
     ]
 }
 
@@ -87,15 +91,35 @@ def stop(cfg) {
     }
 }
 
+def updateCode(cfg) {
+    stage('update-code') {
+        if (params.Hash == "" || params.Hash == null) {
+            error("Hash parameter is required for updating code.")
+        }
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: params.Hash]],
+            userRemoteConfigs: [[
+                url: "${cfg.GIT_REPO_URL}",
+                credentialsId: "${cfg.CREDENTIALS_ID}"
+            ]]
+        ])
+    }
+}
+
 node(params.Server) {
     def cfg = getCfg()
     currentBuild.displayName = "#${env.BUILD_NUMBER} - ${params.Action} on ${params.Server}"
     
-    switch(params.Action) {
-        case 'Start':
-            start(cfg)
-        case 'Stop':
-            stop(cfg)
-        break
+    if (params.Action == 'Start') {
+        start(cfg)
+    } else if (params.Action == 'Stop') {
+        stop(cfg)
+    } else if (params.Action == "Update Code") {
+        stop(cfg)
+        updateCode(cfg)
+        start(cfg)
+    } else {
+        error("Invalid action: ${params.Action}")
     }
 }
