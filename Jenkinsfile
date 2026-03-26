@@ -74,7 +74,7 @@ pipeline {
                 label "${AGENT_LABEL}"
             }
             steps {
-                sh(script: """ docker build --network ${DOCKER_NETWORK} -t ${DOCKER_IMAGE} . """, label: 'build docker image')
+                sh(script: """ DOCKER_BUILDKIT=0 docker build --network ${DOCKER_NETWORK} -t ${DOCKER_IMAGE} . """, label: 'build docker image')
             }
         }
         stage('deploy') {
