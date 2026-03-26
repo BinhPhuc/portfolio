@@ -33,7 +33,11 @@ def start(cfg) {
     stage('copy-env') {
         sh(script: "sudo cp ${cfg.ENV_DIR}/.env .", label: 'copy .env file for production environment')
     }
-    
+
+    stage('clean-cache') {
+        sh(script: "rm -rf .next/cache", label: 'clean Next.js cache to ensure fresh build')
+    }
+
     stage('install-dependencies') {
         docker.image("${cfg.DOCKER_AGENT_IMAGE}").inside("--network ${cfg.DOCKER_NETWORK}") { c ->
             writeFile file: 'next-lock.cache', text: "${env.GIT_COMMIT}"

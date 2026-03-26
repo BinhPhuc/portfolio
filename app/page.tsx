@@ -37,7 +37,7 @@ export default function HomePage() {
               Available For Work
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-balance mb-6">
-              Hi, I'm <span className="text-primary">Pham Phuc Binh - test update code</span>
+              Hi, I'm <span className="text-primary">Pham Phuc Binh</span>
             </h1>
             <p className="text-xl text-muted-foreground text-pretty max-w-2xl mx-auto mb-8">
               I'm a passionate developer who loves creating modern web products
