@@ -1,5 +1,4 @@
 def getCfg() {
-    // Khai báo biến cục bộ để tái sử dụng trong map
     def imageName = 'portfolio'
     def imageTag = 'latest'
     
@@ -82,13 +81,21 @@ def start(cfg) {
     }
 }
 
+def stop(cfg) {
+    stage('stop') {
+        sh(script: "docker rm -f ${cfg.DOCKER_CONTAINER_NAME} || true", label: 'stop and remove docker container if exists')
+    }
+}
+
 node(params.Server) {
     def cfg = getCfg()
     currentBuild.displayName = "#${env.BUILD_NUMBER} - ${params.Action} on ${params.Server}"
     
-    if (params.Action == 'Start') {
-        start(cfg)
-    } else {
-        echo "Action is not Start. Current Action: ${params.Action}"
+    switch(params.Action) {
+        case 'Start':
+            start(cfg)
+        case 'Stop':
+            stop(cfg)
+        break
     }
 }
